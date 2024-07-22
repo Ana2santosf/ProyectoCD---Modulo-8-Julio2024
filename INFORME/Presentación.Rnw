@@ -4,8 +4,8 @@
 
 \title{Presentación de Análisis de Datos}
 \author{Ana G. Dos Santos F.}
-\date{\today}
-\usetheme{Madrid}
+\date{\Sexpr{Sys.Date()}}
+\usetheme{Berlin}
 
 \begin{document}
 
@@ -14,7 +14,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Agenda}
+  \frametitle{Índice}
   \tableofcontents
 \end{frame}
 
