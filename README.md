@@ -13,9 +13,8 @@ El objetivo de este proyecto es realizar un análisis detallado de la base de da
 
 1. Depurar y preparar la base de datos de la ESS para análisis posteriores.
 2. Explorar y analizar la relación entre la satisfacción con la vida y variables sociodemográficas como edad, género, nivel educativo y estado civil.
-3. Implementar visualizaciones interactivas mediante dashboards para facilitar la interpretación de los datos.
-4. Generar informes técnicos detallados que resuman los principales hallazgos utilizando RMarkdown.
-5. Crear presentaciones efectivas que comuniquen los resultados del análisis utilizando RMarkdown y Shiny.
+3. Implementar visualizaciones interactivas mediante dashboards para facilitar la interpretación de los datos; esto, mediante la creación de presentacionesque comuniquen los resultados del análisis utilizando RMarkdown y Shiny.
+4. Generar informes técnicos que resuman los principales hallazgos utilizando RNW.
 
 
 ## Estructura del Repositorio
@@ -23,21 +22,31 @@ El objetivo de este proyecto es realizar un análisis detallado de la base de da
 La estructura del repositorio es la siguiente:
 
 - `README.md`: Este archivo.
+
 - `Datos/`
-  - `Base de datos original/`: Contiene la base de datos original en formato CSV.
-  - `Código Depuración/`: Scripts utilizados para la depuración de la base de datos.
+  - `Base de datos original/`: Contiene la base de datos original en formato CSV con el nombre de "ESS9e03_2-ESS10-subset.csv".
+  - `BBDD Original.R/`: Scripts para isntalar o cargar librerias y leer la BBDD.
+  - `Depuración_BBDD.R/`: Scripts utilizado para la depuración de la base de datos.
+  - `BBDD Depurada.R/`: Scripts con la BBDD depurada.
   - `Base de datos depurada/`: Contiene la base de datos depurada en formato CSV.
+  - `Base de datos depurada/`: Contiene la base de datos depurada en formato CSV con el nombre de "ESS9e03_2-ESS10-subset_depurada.csv".
+  
 - `SCRIPT R - Gráficos + Estadísticas/`
-  - `Código/`: Scripts R para generar Gráficos y Summary.
+  - `Análisis.R/`: Scripts R para generar Gráficos y Summary.
+  
+- `Informe/`
+  - `Código/`: Scripts RSweave (.Rnw) para generar el informe técnico.
+  - `PDF/`: Informe técnico generado en formato PDF.
+  - `PNG/`: Imágenes PNG obtenidas al ejecutar el Script anterior
+  - `CSV/`: Summary_stats.csv que contiene estadísticas descriptivas obtenidas al ejecutar el Script anterior
+  
+- `Presentación/`
+     - `Código/`: Scripts RSweave (.Rnw) para generar una presentación dinámica con knitr.
+     - `PDF/`: Presentación exportada en formato PDF.
+  
 - `Dashboard/`
   - `Código/`: Scripts R para generar dashboards.
   - `HTML/`: Dashboards exportados en formato HTML.
-- `Informe/`
-  - `Código/`: Scripts RMarkdown (.Rmd) para generar el informe técnico.
-  - `PDF/`: Informe técnico generado en formato PDF.
-- `Presentación/`
-  - `Código/`: Scripts RMarkdown (.Rmd) para generar la presentación.
-  - `PDF, HTML o similar/`: Presentación exportada en formato PDF, HTML u otro formato adecuado.
 
 ## Instrucciones de Instalación
 
@@ -46,14 +55,18 @@ La estructura del repositorio es la siguiente:
    git clone https://github.com/Ana2santosf/ProyectoCD---Modulo-8-Julio2024.git
    
 ## Instala los paquetes necesarios en R Studio
-install.packages(c("readr", "dplyr", "ggplot2", "knitr", "rmarkdown", "shiny"))
+install.packages(c("readr", "here", "dplyr", "tinytex", "ggplot2", "knitr", "tinytex::tlmgr_install('graphicx')", "rmarkdown", "flexdashboard", "shiny"))
 
 ## ¿Cómo usar el Proyecto?
 
-1. Navega a la carpeta Datos/ y ejecuta los scripts de depuración para preparar la base de datos.
-2. Ejecuta el Script de R de la carpeta SCRIPT
-3. Consulta el informe técnico en Informe/PDF/ para revisar los principales hallazgos.
-4. Consulta la presentación en Presentación/ para obtener un resumen visual del proyecto.
+1. Navega a la carpeta DATOS/ y ejecuta los scripts de BBDD Original, Depuracion_BBDD para preparar la base de datos y BBDD Depurada para cargar la BBDD depurada.
+
+2. Ejecuta el Script de R de la carpeta SCRIPT R - Gráficos + Estadísticas para generar los gráficos como imagénes PNG y un summary.csv para visualizar las estadísticas
+
+3. Ingresa en la carpeta INFORME/ y ejecuta el Informe.Rnw y compila PDF para que puedas visualizar el informe - Informe/PDF/ con los principales hallazgos o más bien un análisis exploratorio.
+
+4. Consulta la presentación en Presentación/ para obtener un resumen visual del proyecto, para ello, deberás ejecutar la Presentación.Rnw y compilar en PDF.
+
 5. Usa los scripts en Dashboard/Código/ para generar dashboards interactivos.
 
 
