@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  total={170mm,257mm},
+  left=20mm,
+  top=20mm
+}
+
+\title{Informe de Análisis de Datos}
+\author{Ana G. Dos Santos F.}
+\date{\Sexpr{Sys.Date()}}
+
+\begin{document}
+\maketitle
+
+\section*{Primeros pasos}
+
+\begin{itemize}
+\item Establecer el directorio de trabajo
+\item Instalar una distribución de \LaTeX{}: tinytex
+\item Instalar knitr si fuera necesario
+\item Configurar globalmente los Chunk
+\item Instalar paquetes de \LaTeX{} mediante tinytex
+\end{itemize}
+
+<<setup, include=FALSE>>=
+# Establece el directorio de trabajo
+setwd("C:/Users/User/Desktop/GITHUB/ProyectoCD---Modulo-8-Julio2024/INFORME")
+
+# Verifica la existencia de los paquetes necesarios
+if (!requireNamespace("tinytex", quietly = TRUE)) {
+  install.packages("tinytex")
+}
+library(tinytex)
+
+if (!requireNamespace("knitr", quietly = TRUE)) {
+  install.packages("knitr")
+}
+library(knitr)
+
+if (!requireNamespace("readr", quietly = TRUE)) install.packages("readr")
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+# Configura globalmente los chunks de knitr
+knitr::opts_chunk$set(echo = FALSE, fig.height = 10, fig.width = 10, results = 'asis')
+@
+
+<<eval=FALSE>>=
+# Instala los paquetes de \LaTeX{} necesarios
+tinytex::tlmgr_install('graphicx')
+@
+
+\section{Requisitos del entregable}
+\subsection{Deberá contener al menos 2 de los siguientes:}
+
+\begin{itemize}
+\item Una tabla resumen con algunos indicadores.
+\item Un gráfico con los principales resultados.
+\item Explicaciones que combinen resultados de R (insertados mediante código) con texto con formato.
+\end{itemize}
+
+\section{Introducción}
+Este informe presenta el análisis de los datos depurados del conjunto de datos ESS9e03\_2-ESS10.
+
+\section{Análisis de Datos}
+
+\subsection{Visualización de Gráficos}
+
+<<include_graphics, echo=FALSE, results='asis'>>=
+knitr::include_graphics(c("INFORME/distribucion_felicidad.png", "INFORME/distribucion_satisfaccion_vida.png", "INFORME/distribucion_salud_subjetiva.png", "INFORME/relacion_satisfaccion_vida_economia.png", "INFORME/satisfaccion_vida_estado_civil.png", "INFORME/satisfaccion_vida_relacion_laboral.png", "INFORME/satisfaccion_vida_genero.png"))
+@
+
+\subsection{Tabla estadística descriptiva}
+
+<<table_chunk, results='asis'>>=
+# Muestra la tabla de estadísticas descriptivas
+knitr::kable(summary_stats, caption = "Tabla de Estadísticas Descriptivas", format = "latex")
+@
+
+
+\section{Explicaciones que combinen resultados de R (insertados mediante código) con texto con formato}
+
+%La base de datos \texttt{df_depurado} tiene \Sexpr{n_observaciones} observaciones.
+
+\end{document}
+
+
