@@ -50,8 +50,6 @@
 
 \usepackage{alltt}
 \usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{booktabs}
 \usepackage{geometry}
 \geometry{
   a4paper,
@@ -70,11 +68,12 @@
 \section*{Primeros pasos}
 
 \begin{itemize}
-\item Establecer el directorio de trabajo
 \item Instalar una distribución de \LaTeX{}: tinytex
 \item Instalar knitr si fuera necesario
+\item cargar librerias necesarias 'here', 'readr', 'dplyr' y 'ggplot2'
 \item Configurar globalmente los Chunk
-\item Instalar paquetes de \LaTeX{} mediante tinytex
+\item Importar la BBDD Depurada
+\item Instalar paquetes de \LaTeX{} mediante tinytex como por ejemplo 'graphicx'
 \end{itemize}
 
 
@@ -85,9 +84,9 @@
 \subsection{Deberá contener al menos 2 de los siguientes:}
 
 \begin{itemize}
-\item Una tabla resumen con algunos indicadores.
 \item Un gráfico con los principales resultados.
 \item Explicaciones que combinen resultados de R (insertados mediante código) con texto con formato.
+\item Una tabla resumen con algunos indicadores.
 \end{itemize}
 
 \section{Introducción}
@@ -97,23 +96,45 @@ Este informe presenta el análisis de los datos depurados del conjunto de datos 
 
 \subsection{Visualización de Gráficos}
 
-\begin{kframe}
+
+\includegraphics[width=\maxwidth]{distribucion_felicidad} 
+
+\includegraphics[width=\maxwidth]{distribucion_satisfaccion_vida} 
+
+\includegraphics[width=\maxwidth]{distribucion_salud_subjetiva} 
+
+\includegraphics[width=\maxwidth]{relacion_satisfaccion_vida_economia} 
+
+\includegraphics[width=\maxwidth]{satisfaccion_vida_estado_civil} 
+
+\includegraphics[width=\maxwidth]{satisfaccion_vida_genero} 
+
+\includegraphics[width=\maxwidth]{satisfaccion_vida_relacion_laboral} 
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in knitr::include\_graphics(c("{}INFORME/distribucion\_felicidad.png"{}, : Cannot find the file(s): "{}INFORME/distribucion\_felicidad.png"{}; "{}INFORME/distribucion\_satisfaccion\_vida.png"{}; "{}INFORME/distribucion\_salud\_subjetiva.png"{}; "{}INFORME/relacion\_satisfaccion\_vida\_economia.png"{}; "{}INFORME/satisfaccion\_vida\_estado\_civil.png"{}; "{}INFORME/satisfaccion\_vida\_relacion\_laboral.png"{}; "{}INFORME/satisfaccion\_vida\_genero.png"{}}}\end{kframe}
+\section{Explicaciones que combinen resultados de R (insertados mediante código) con texto con formato}
+
+La media de la edad de los encuestados es \textbf{\emph{56.5660852}} años, con una desviación estándar de \textbf{\emph{74.9179991}} años. La tabla siguiente muestra un resumen de las estadísticas descriptivas.
 
 \subsection{Tabla estadística descriptiva}
 
 \begin{kframe}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): objeto 'summary\_stats' no encontrado}}\end{kframe}
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Rows: 1 Columns: 6\\\#\# -- Column specification --------------------------------------------------------\\\#\# Delimiter: "{},"{}\\\#\# dbl (6): Edad\_Media, Edad\_SD, Satisfaccion\_Vida\_Media, Satisfaccion\_Vida\_SD,...\\\#\# \\\#\# i Use `spec()` to retrieve the full column specification for this data.\\\#\# i Specify the column types or set `show\_col\_types = FALSE` to quiet this message.}}\end{kframe}\begin{table}
+
+\caption{\label{tab:table_chunk}Tabla de Estadísticas Descriptivas}
+\centering
+\begin{tabular}[t]{r|r|r|r|r|r}
+\hline
+Edad\_Media & Edad\_SD & Satisfaccion\_Vida\_Media & Satisfaccion\_Vida\_SD & Felicidad\_Media & Felicidad\_SD\\
+\hline
+56.56609 & 74.918 & 8.131769 & 2.185627 & 8.357512 & 1.949245\\
+\hline
+\end{tabular}
+\end{table}
 
 
-\section{Explicaciones que combinen resultados de R (insertados mediante código) con texto con formato}
-
-%La base de datos \texttt{df_depurado} tiene n_observaciones observaciones.
 
 \end{document}
-
 

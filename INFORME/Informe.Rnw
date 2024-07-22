@@ -1,7 +1,5 @@
 \documentclass{article}
 \usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{booktabs}
 \usepackage{geometry}
 \geometry{
   a4paper,
@@ -20,18 +18,16 @@
 \section*{Primeros pasos}
 
 \begin{itemize}
-\item Establecer el directorio de trabajo
 \item Instalar una distribución de \LaTeX{}: tinytex
 \item Instalar knitr si fuera necesario
+\item cargar librerias necesarias 'here', 'readr', 'dplyr' y 'ggplot2'
 \item Configurar globalmente los Chunk
-\item Instalar paquetes de \LaTeX{} mediante tinytex
+\item Importar la BBDD Depurada
+\item Instalar paquetes de \LaTeX{} mediante tinytex como por ejemplo 'graphicx'
 \end{itemize}
 
 <<setup, include=FALSE>>=
-# Establece el directorio de trabajo
-setwd("C:/Users/User/Desktop/GITHUB/ProyectoCD---Modulo-8-Julio2024/INFORME")
-
-# Verifica la existencia de los paquetes necesarios
+# Verificar la existencia de los paquetes necesarios
 if (!requireNamespace("tinytex", quietly = TRUE)) {
   install.packages("tinytex")
 }
@@ -42,15 +38,23 @@ if (!requireNamespace("knitr", quietly = TRUE)) {
 }
 library(knitr)
 
+if (!requireNamespace("here", quietly = TRUE)) install.packages("here")
 if (!requireNamespace("readr", quietly = TRUE)) install.packages("readr")
 if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
 if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")
+library(here)
 library(readr)
 library(dplyr)
 library(ggplot2)
 
 # Configura globalmente los chunks de knitr
-knitr::opts_chunk$set(echo = FALSE, fig.height = 10, fig.width = 10, results = 'asis')
+knitr::opts_chunk$set(echo = FALSE, fig.height = 6, fig.width = 6, results = 'asis')
+
+# Definir la ruta al archivo CSV depurado
+archivo_depurado <- here("DATOS", "ESS9e03_2-ESS10-subset_depurada.csv")
+
+# Importar el archivo CSV depurado
+df_depurado <- read_csv(archivo_depurado)
 @
 
 <<eval=FALSE>>=
@@ -62,9 +66,9 @@ tinytex::tlmgr_install('graphicx')
 \subsection{Deberá contener al menos 2 de los siguientes:}
 
 \begin{itemize}
-\item Una tabla resumen con algunos indicadores.
 \item Un gráfico con los principales resultados.
 \item Explicaciones que combinen resultados de R (insertados mediante código) con texto con formato.
+\item Una tabla resumen con algunos indicadores.
 \end{itemize}
 
 \section{Introducción}
@@ -74,22 +78,38 @@ Este informe presenta el análisis de los datos depurados del conjunto de datos 
 
 \subsection{Visualización de Gráficos}
 
-<<include_graphics, echo=FALSE, results='asis'>>=
-knitr::include_graphics(c("INFORME/distribucion_felicidad.png", "INFORME/distribucion_satisfaccion_vida.png", "INFORME/distribucion_salud_subjetiva.png", "INFORME/relacion_satisfaccion_vida_economia.png", "INFORME/satisfaccion_vida_estado_civil.png", "INFORME/satisfaccion_vida_relacion_laboral.png", "INFORME/satisfaccion_vida_genero.png"))
+<<include_graphics, echo=FALSE, results='asis', fig.pos='h!'>>=
+# Verificar si los archivos de gráficos existen antes de incluirlos
+graficos <- c(
+  here("INFORME", "distribucion_felicidad.png"), 
+  here("INFORME", "distribucion_satisfaccion_vida.png"), 
+  here("INFORME", "distribucion_salud_subjetiva.png"), 
+  here("INFORME", "relacion_satisfaccion_vida_economia.png"), 
+  here("INFORME", "satisfaccion_vida_estado_civil.png"), 
+  here("INFORME", "satisfaccion_vida_genero.png"), 
+  here("INFORME", "satisfaccion_vida_relacion_laboral.png")
+)
+
+graficos_existentes <- graficos[file.exists(graficos)]
+
+if (length(graficos_existentes) > 0) {
+  knitr::include_graphics(graficos_existentes)
+} else {
+  cat("No se encontraron los archivos de gráficos especificados.")
+}
 @
-
-\subsection{Tabla estadística descriptiva}
-
-<<table_chunk, results='asis'>>=
-# Muestra la tabla de estadísticas descriptivas
-knitr::kable(summary_stats, caption = "Tabla de Estadísticas Descriptivas", format = "latex")
-@
-
 
 \section{Explicaciones que combinen resultados de R (insertados mediante código) con texto con formato}
 
-%La base de datos \texttt{df_depurado} tiene \Sexpr{n_observaciones} observaciones.
+La media de la edad de los encuestados es \textbf{\emph{\Sexpr{mean(df_depurado$Edad, na.rm = TRUE)}}} años, con una desviación estándar de \textbf{\emph{\Sexpr{sd(df_depurado$Edad, na.rm = TRUE)}}} años. La tabla siguiente muestra un resumen de las estadísticas descriptivas.
+
+\subsection{Tabla estadística descriptiva}
+
+<<table_chunk, echo=FALSE, results='asis', fig.pos='h!'>>=
+# Muestra la tabla de estadísticas descriptivas
+summary_stats <- read_csv(here("INFORME", "summary_stats.csv"))
+knitr::kable(summary_stats, caption = "Tabla de Estadísticas Descriptivas", format = "latex")
+@
 
 \end{document}
-
 
