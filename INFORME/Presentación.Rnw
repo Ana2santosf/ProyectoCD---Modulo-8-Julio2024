@@ -1,0 +1,104 @@
+\documentclass{beamer}
+\usepackage{graphicx}
+\usepackage{booktabs}
+
+\title{Presentación de Análisis de Datos}
+\author{Ana G. Dos Santos F.}
+\date{\today}
+\usetheme{Madrid}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Agenda}
+  \tableofcontents
+\end{frame}
+
+\section{Introducción}
+\begin{frame}
+  \frametitle{Introducción}
+  Este informe presenta el análisis de los datos depurados del conjunto de datos ESS9e03\_2-ESS10.
+\end{frame}
+
+\section{Gráficos Principales}
+\begin{frame}
+  \frametitle{Gráficos Principales}
+  A continuación, se muestran los principales gráficos obtenidos del análisis de datos.
+\end{frame}
+
+<<setup, include=FALSE>>=
+# Verificar la existencia de los paquetes necesarios
+if (!requireNamespace("tinytex", quietly = TRUE)) {
+  install.packages("tinytex")
+}
+library(tinytex)
+
+if (!requireNamespace("knitr", quietly = TRUE)) {
+  install.packages("knitr")
+}
+library(knitr)
+
+if (!requireNamespace("here", quietly = TRUE)) install.packages("here")
+if (!requireNamespace("readr", quietly = TRUE)) install.packages("readr")
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")
+library(here)
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+# Configura globalmente los chunks de knitr
+knitr::opts_chunk$set(echo = FALSE, fig.height = 6, fig.width = 6, results = 'asis')
+
+# Definir la ruta al archivo CSV depurado
+archivo_depurado <- here("DATOS", "ESS9e03_2-ESS10-subset_depurada.csv")
+
+# Importar el archivo CSV depurado
+df_depurado <- read_csv(archivo_depurado)
+@
+
+<<include_graphics, echo=FALSE, results='asis'>>=
+# Verificar si los archivos de gráficos existen antes de incluirlos
+graficos <- c(
+  here("INFORME", "distribucion_felicidad.png"), 
+  here("INFORME", "distribucion_satisfaccion_vida.png"), 
+  here("INFORME", "distribucion_salud_subjetiva.png"), 
+  here("INFORME", "relacion_satisfaccion_vida_economia.png"), 
+  here("INFORME", "satisfaccion_vida_estado_civil.png"), 
+  here("INFORME", "satisfaccion_vida_genero.png"), 
+  here("INFORME", "satisfaccion_vida_relacion_laboral.png")
+)
+
+graficos_existentes <- graficos[file.exists(graficos)]
+
+if (length(graficos_existentes) > 0) {
+  for (grafico in graficos_existentes) {
+    cat("\\begin{frame}",
+        "\\frametitle{Gráfico}",
+        sprintf("\\includegraphics[width=0.8\\textwidth]{%s}", grafico),
+        "\\end{frame}",
+        sep = "\n")
+  }
+} else {
+  cat("No se encontraron los archivos de gráficos especificados.")
+}
+@
+
+\section{Estadísticas Descriptivas}
+\begin{frame}
+  \frametitle{Estadísticas Descriptivas}
+  La media de la edad de los encuestados es \textbf{\emph{\Sexpr{mean(df_depurado$Edad, na.rm = TRUE)}}} años, con una desviación estándar de \textbf{\emph{\Sexpr{sd(df_depurado$Edad, na.rm = TRUE)}}} años. La tabla siguiente muestra un resumen de las estadísticas descriptivas.
+\end{frame}
+
+<<table_chunk, echo=FALSE, results='asis'>>=
+# Muestra la tabla de estadísticas descriptivas
+summary_stats <- read_csv(here("INFORME", "summary_stats.csv"))
+knitr::kable(summary_stats, caption = "Tabla de Estadísticas Descriptivas", format = "latex")
+@
+
+\end{document}
+
