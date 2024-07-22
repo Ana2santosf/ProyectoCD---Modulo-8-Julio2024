@@ -1,8 +1,10 @@
-# Instalar y cargar las librerías necesarias
+# Instalar y cargar paquetes y librerías necesarias
 if (!requireNamespace("here", quietly = TRUE)) install.packages("here")
+if (!requireNamespace("readr", quietly = TRUE)) install.packages("readr")
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+library(here)
 library(readr)
 library(dplyr)
-library(here)
 
 # Definir la ruta al archivo CSV original y depurado
 archivo_original <- here("DATOS", "ESS9e03_2-ESS10-subset.csv")
@@ -104,3 +106,4 @@ head(df_depurado)
 
 # Verificar los nombres de las columnas
 colnames(df_depurado)
+
