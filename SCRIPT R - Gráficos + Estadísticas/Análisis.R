@@ -2,12 +2,14 @@
 if (!requireNamespace("readr", quietly = TRUE)) install.packages("readr")
 if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
 if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")
+if (!requireNamespace("here", quietly = TRUE)) install.packages("here")
 library(readr)
 library(dplyr)
 library(ggplot2)
+library(here)
 
 # Definir la ruta al archivo CSV depurado
-archivo_depurado <- "DATOS/ESS9e03_2-ESS10-subset_depurada.csv"
+archivo_depurado <- here("DATOS", "ESS9e03_2-ESS10-subset_depurada.csv")
 
 # Verificar que el archivo existe
 if (file.exists(archivo_depurado)) {
@@ -27,8 +29,8 @@ if (file.exists(archivo_depurado)) {
     )
   
   # Crear carpeta para informes si no existe
-  if (!dir.exists("INFORME")) {
-    dir.create("INFORME")
+  if (!dir.exists(here("INFORME"))) {
+    dir.create(here("INFORME"))
   }
   
   # Crear gráficos
@@ -39,7 +41,7 @@ if (file.exists(archivo_depurado)) {
     labs(title = "Distribución de los Niveles de Felicidad",
          x = "Nivel de Felicidad",
          y = "Frecuencia")
-  ggsave("INFORME/distribucion_felicidad.png", plot = p1, width = 7, height = 7)
+  ggsave(here("INFORME", "distribucion_felicidad.png"), plot = p1, width = 7, height = 7)
   
   # 2. Distribución de la satisfacción con la vida
   p2 <- ggplot(df_depurado, aes(x = Satisfaccion_Vida)) +
@@ -48,7 +50,7 @@ if (file.exists(archivo_depurado)) {
     labs(title = "Distribución de la Satisfacción con la Vida",
          x = "Satisfacción con la Vida",
          y = "Frecuencia")
-  ggsave("INFORME/distribucion_satisfaccion_vida.png", plot = p2, width = 7, height = 7)
+  ggsave(here("INFORME", "distribucion_satisfaccion_vida.png"), plot = p2, width = 7, height = 7)
   
   # 3. Distribución de la salud subjetiva
   p3 <- ggplot(df_depurado, aes(x = Salud_Subjetiva)) +
@@ -57,7 +59,7 @@ if (file.exists(archivo_depurado)) {
     labs(title = "Distribución de la Salud Subjetiva",
          x = "Salud Subjetiva",
          y = "Frecuencia")
-  ggsave("INFORME/distribucion_salud_subjetiva.png", plot = p3, width = 7, height = 7)
+  ggsave(here("INFORME", "distribucion_salud_subjetiva.png"), plot = p3, width = 7, height = 7)
   
   # 4. Relación entre satisfacción con la economía y satisfacción con la vida
   if ("Satisfaccion_Economia" %in% colnames(df_depurado)) {
@@ -68,7 +70,7 @@ if (file.exists(archivo_depurado)) {
            x = "Satisfacción con la Economía",
            y = "Frecuencia",
            fill = "Satisfacción con la Vida")
-    ggsave("INFORME/relacion_satisfaccion_vida_economia.png", plot = p4, width = 7, height = 7)
+    ggsave(here("INFORME", "relacion_satisfaccion_vida_economia.png"), plot = p4, width = 7, height = 7)
   }
   
   # 5. Satisfacción con la vida según estado civil
@@ -79,7 +81,7 @@ if (file.exists(archivo_depurado)) {
          x = "Estado Civil",
          y = "Frecuencia",
          fill = "Satisfacción con la Vida")
-  ggsave("INFORME/satisfaccion_vida_estado_civil.png", plot = p5, width = 7, height = 7)
+  ggsave(here("INFORME", "satisfaccion_vida_estado_civil.png"), plot = p5, width = 7, height = 7)
   
   # 6. Satisfacción con la vida según relación laboral
   p6 <- ggplot(df_depurado, aes(x = Relacion_Laboral, fill = Satisfaccion_Vida)) +
@@ -89,7 +91,7 @@ if (file.exists(archivo_depurado)) {
          x = "Relación Laboral",
          y = "Frecuencia",
          fill = "Satisfacción con la Vida")
-  ggsave("INFORME/satisfaccion_vida_relacion_laboral.png", plot = p6, width = 7, height = 7)
+  ggsave(here("INFORME", "satisfaccion_vida_relacion_laboral.png"), plot = p6, width = 7, height = 7)
   
   # 7. Diferencias en la satisfacción con la vida entre hombres y mujeres
   p7 <- ggplot(df_depurado, aes(x = Genero, fill = Satisfaccion_Vida)) +
@@ -99,7 +101,7 @@ if (file.exists(archivo_depurado)) {
          x = "Género",
          y = "Frecuencia",
          fill = "Satisfacción con la Vida")
-  ggsave("INFORME/satisfaccion_vida_genero.png", plot = p7, width = 7, height = 7)
+  ggsave(here("INFORME", "satisfaccion_vida_genero.png"), plot = p7, width = 7, height = 7)
   
   # Crear una tabla resumen de estadísticas descriptivas
   summary_stats <- df_depurado %>%
@@ -111,9 +113,8 @@ if (file.exists(archivo_depurado)) {
       Felicidad_Media = mean(as.numeric(Nivel_Felicidad), na.rm = TRUE),
       Felicidad_SD = sd(as.numeric(Nivel_Felicidad), na.rm = TRUE)
     )
-  write.csv(summary_stats, "INFORME/summary_stats.csv", row.names = FALSE)
+  write.csv(summary_stats, here("INFORME", "summary_stats.csv"), row.names = FALSE)
   
 } else {
   cat("El archivo no se encuentra en la ruta especificada:", archivo_depurado)
 }
-
