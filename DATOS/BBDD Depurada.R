@@ -1,14 +1,16 @@
+# Instalar y cargar las librerías necesarias
+if (!requireNamespace("here", quietly = TRUE)) install.packages("here")
+library(readr)
+library(dplyr)
+library(here)
+
 # Verificar el contenido de la carpeta DATOS
-contenido_datos <- list.files("DATOS")
+contenido_datos <- list.files(here("DATOS"))
 cat("Contenido de la carpeta 'DATOS':\n")
 print(contenido_datos)
 
 # Definir la ruta al archivo CSV depurado
-archivo_depurado <- "DATOS/ESS9e03_2-ESS10-subset_depurada.csv"
-
-# Cargar las librerías necesarias
-library(readr)
-library(dplyr)
+archivo_depurado <- here("DATOS", "ESS9e03_2-ESS10-subset_depurada.csv")
 
 # Verificar la ruta y el archivo
 if (file.exists(archivo_depurado)) {

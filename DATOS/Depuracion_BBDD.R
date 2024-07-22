@@ -1,12 +1,12 @@
-# Definir la ruta al archivo CSV original
-archivo_original <- "DATOS/ESS9e03_2-ESS10-subset.csv"
-
-# Definir la ruta al archivo CSV depurado
-archivo_depurado <- "DATOS/ESS9e03_2-ESS10-subset_depurada.csv"
-
-# Cargar las librerías necesarias
+# Instalar y cargar las librerías necesarias
+if (!requireNamespace("here", quietly = TRUE)) install.packages("here")
 library(readr)
 library(dplyr)
+library(here)
+
+# Definir la ruta al archivo CSV original y depurado
+archivo_original <- here("DATOS", "ESS9e03_2-ESS10-subset.csv")
+archivo_depurado <- here("DATOS", "ESS9e03_2-ESS10-subset_depurada.csv")
 
 # Verificar la ruta y el archivo
 if (file.exists(archivo_original)) {
