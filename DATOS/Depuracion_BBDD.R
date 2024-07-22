@@ -97,6 +97,7 @@ df_depurado <- df_depurado %>%
   ))
 
 # Guardar la base de datos depurada en un archivo CSV
+write_csv(df_depurado, archivo_depurado1)
 write_csv(df_depurado, archivo_depurado)
 
 # Mensaje de confirmación
