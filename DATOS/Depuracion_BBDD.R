@@ -9,9 +9,8 @@ library(dplyr)
 # Definir la ruta al archivo CSV original y depurado
 archivo_original <- here("DATOS", "ESS9e03_2-ESS10-subset.csv")
 archivo_depurado1 <- here("DATOS", "ESS9e03_2-ESS10-subset_depurada.csv")
-archivo_depurado <- here("INFORME", "ESS9e03_2-ESS10-subset_depurada.csv")
-archivo_depurado <- here("DASHBOARD", "ESS9e03_2-ESS10-subset_depurada.csv")
-
+archivo_depurado_informe <- here("INFORME", "ESS9e03_2-ESS10-subset_depurada.csv")
+archivo_depurado_dashboard <- here("DASHBOARD", "ESS9e03_2-ESS10-subset_depurada.csv")
 
 # Verificar la ruta y el archivo
 if (file.exists(archivo_original)) {
@@ -100,14 +99,16 @@ df_depurado <- df_depurado %>%
 
 # Guardar la base de datos depurada en un archivo CSV
 write_csv(df_depurado, archivo_depurado1)
-write_csv(df_depurado, archivo_depurado)
+write_csv(df_depurado, archivo_depurado_informe)
+write_csv(df_depurado, archivo_depurado_dashboard)
 
 # Mensaje de confirmación
-cat("La base de datos depurada ha sido guardada en:", archivo_depurado)
+cat("La base de datos depurada ha sido guardada en:", archivo_depurado1, archivo_depurado_informe, archivo_depurado_dashboard, "\n")
 
 # Mostrar las primeras filas del dataframe depurado
 head(df_depurado)
 
 # Verificar los nombres de las columnas
 colnames(df_depurado)
+
 
