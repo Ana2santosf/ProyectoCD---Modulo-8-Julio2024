@@ -10,6 +10,8 @@ library(dplyr)
 archivo_original <- here("DATOS", "ESS9e03_2-ESS10-subset.csv")
 archivo_depurado1 <- here("DATOS", "ESS9e03_2-ESS10-subset_depurada.csv")
 archivo_depurado <- here("INFORME", "ESS9e03_2-ESS10-subset_depurada.csv")
+archivo_depurado <- here("DASHBOARD", "ESS9e03_2-ESS10-subset_depurada.csv")
+
 
 # Verificar la ruta y el archivo
 if (file.exists(archivo_original)) {
