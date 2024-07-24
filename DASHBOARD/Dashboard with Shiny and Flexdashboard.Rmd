@@ -25,8 +25,8 @@ for (lib in librerias) {
   library(lib, character.only = TRUE)
 }
 
-# Definir la ruta absoluta al archivo CSV depurado en la carpeta DASHBOARD
-archivo_dashboard <- "C:/Users/User/Desktop/GITHUB/ProyectoCD---Modulo-8-Julio2024/DASHBOARD/ESS9e03_2-ESS10-subset_depurada.csv"
+# Definir la ruta relativa al archivo CSV depurado en la misma carpeta que el archivo RMarkdown
+archivo_dashboard <- "ESS9e03_2-ESS10-subset_depurada.csv"
 print(paste("Ruta del archivo de datos:", archivo_dashboard))
 
 # Verificar si el archivo existe
@@ -36,6 +36,7 @@ if (file.exists(archivo_dashboard)) {
 } else {
   stop("El archivo de datos no se encuentra en la ruta especificada:", archivo_dashboard)
 }
+
 
 # Convertir columnas categóricas a factores
 datos <- datos %>%
