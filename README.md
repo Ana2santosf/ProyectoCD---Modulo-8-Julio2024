@@ -212,6 +212,7 @@ Los datos provienen de la Encuesta Social Europea (ESS) y son actualizados bianu
 7. ¿Cuáles son las diferencias en la satisfacción con la vida (stflife) entre los diferentes países europeos encuestados?
 
 **Preguntas Adicionales**
+\\
 8. ¿Cómo se relaciona el tiempo de uso de Internet (netustm) con el nivel de felicidad (happy)?
 9. ¿Existen diferencias significativas en la satisfacción con la vida (stflife) entre hombres y mujeres?
 10. ¿Cómo se relaciona el nivel educativo (Education Group) con la satisfacción con la vida (stflife)?
