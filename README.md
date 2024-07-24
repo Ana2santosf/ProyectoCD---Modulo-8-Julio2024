@@ -65,7 +65,31 @@ install.packages(c("readr", "here", "dplyr", "tinytex", "ggplot2", "knitr", "tin
 
 3. Ingresa en la carpeta INFORME/ y ejecuta el Informe.Rnw y compila PDF para que puedas visualizar el informe - Informe/PDF/ con los principales hallazgos o más bien un análisis exploratorio.
 
-4. Consulta la presentación en Presentación/ para obtener un resumen visual del proyecto, para ello, deberás ejecutar la Presentación.Rnw y compilar en PDF.
+IMPORTANTE!!
+
+#####
+Si al intentar compilar el informe en PDF te sale este error “Unabled to find specified LaTeX program ‘pdfLaTeX’ on the system path
+
+Intenta lo siguiente:
+
+# Instalar tinytex 
+if (!requireNamespace("tinytex", quietly = TRUE)) { install.packages("tinytex") } 
+
+# Reinstalar tinytex 
+tinytex::reinstall_tinytex()
+
+
+Si al intentar esto te llega a salir esto error:
+error en system2("tlmgr", args, ...) "tlmgr" 'not found
+
+Realiza lo siguiente:
+
+# Instalar TinyTeX desde el paquete tinytex 
+tinytex::install_tinytex()
+#####
+
+
+4. Consulta la en la carpeta INFORME/ la presentación y ejecuta el archivo(.Rnw) para obtener un resumen visual del proyecto, para ello, deberás ejecutar la Presentación.Rnw y compilar en PDF.
 
 5. Ejecuta el archivo (.Rmd) desde DASHBOARD/ para que puedas visualizar el dashboard creado en Rmarkdown usando Flexdashboard y Shiny
 
