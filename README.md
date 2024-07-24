@@ -45,7 +45,7 @@ La estructura del repositorio es la siguiente:
      - `PDF/`: Presentación exportada en formato PDF.
   
 - `Dashboard/`
-  - `Código/`: Scripts R para generar dashboards.
+  - `Código/`: Scripts Rmarkdown (.Rmd) para generar dashboards con Flexdashboard y Shiny
   - `HTML/`: Dashboards exportados en formato HTML.
 
 ## Instrucciones de Instalación
@@ -59,7 +59,7 @@ install.packages(c("readr", "here", "dplyr", "tinytex", "ggplot2", "knitr", "tin
 
 ## ¿Cómo usar el Proyecto?
 
-1. Navega a la carpeta DATOS/ y ejecuta los scripts de BBDD Original, Depuracion_BBDD para preparar la base de datos y BBDD Depurada para cargar la BBDD depurada.
+1. Navega a la carpeta DATOS/ y ejecuta los scripts de BBDD Original, Depuracion_BBDD para preparar la base de datos y BBDD Depurada para cargar la BBDD depurada y que genere duplicados en la carpeta de INFORME/ y DASHBOARD/ respectivamente.
 
 2. Ejecuta el Script de R de la carpeta SCRIPT R - Gráficos + Estadísticas para generar los gráficos como imagénes PNG y un summary.csv para visualizar las estadísticas
 
@@ -67,7 +67,7 @@ install.packages(c("readr", "here", "dplyr", "tinytex", "ggplot2", "knitr", "tin
 
 4. Consulta la presentación en Presentación/ para obtener un resumen visual del proyecto, para ello, deberás ejecutar la Presentación.Rnw y compilar en PDF.
 
-5. Usa los scripts en Dashboard/Código/ para generar dashboards interactivos.
+5. Ejecuta el archivo (.Rmd) desde DASHBOARD/ para que puedas visualizar el dashboard creado en Rmarkdown usando Flexdashboard y Shiny
 
 
 ## Análisis Exploratorio de Datos 
