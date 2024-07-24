@@ -1,0 +1,259 @@
+---
+title: "Dashboard - Satisfacción con la vida"
+subtitle: "con indicadores sociodemográficos en diferentes países europeos"
+author: "Ana G. Dos Santos F."
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source_code: embed
+
+runtime: shiny    
+---
+
+```{r setup, include=FALSE}
+# Configurar CRAN mirror
+options(repos = c(CRAN = "https://cran.rstudio.com"))
+
+# Instalar y cargar paquetes necesarios
+librerias <- c("flexdashboard", "tidyverse", "maps", "DT", "shiny", "sf", "rnaturalearth", "rnaturalearthdata")
+
+for (lib in librerias) {
+  if (!requireNamespace(lib, quietly = TRUE)) {
+    install.packages(lib)
+  }
+  library(lib, character.only = TRUE)
+}
+
+# Definir la ruta absoluta al archivo CSV depurado en la carpeta DASHBOARD
+archivo_dashboard <- "C:/Users/User/Desktop/GITHUB/ProyectoCD---Modulo-8-Julio2024/DASHBOARD/ESS9e03_2-ESS10-subset_depurada.csv"
+print(paste("Ruta del archivo de datos:", archivo_dashboard))
+
+# Verificar si el archivo existe
+if (file.exists(archivo_dashboard)) {
+  datos <- read_csv(archivo_dashboard)
+  print("El archivo de datos se encontró correctamente.")
+} else {
+  stop("El archivo de datos no se encuentra en la ruta especificada:", archivo_dashboard)
+}
+
+# Convertir columnas categóricas a factores
+datos <- datos %>%
+  mutate(across(where(is.character), as.factor))
+
+# Filtrar datos para eliminar valores perdidos
+datos <- datos %>%
+  filter(
+    !Nivel_Felicidad %in% c(77, 88, 99),
+    !Satisfaccion_Vida %in% c(77, 88, 99),
+    !Salud_Subjetiva %in% c(7, 8, 9),
+    !Edad %in% c(999),
+    !Tiempo_de_Uso_Internet %in% c(6666, 7777, 8888, 9999),
+    !Anios_Educacion_Completa %in% c(77, 88, 99)
+  )
+
+# Recodificar los países
+datos <- datos %>%
+  mutate(Pais_Encuestado = recode(Pais_Encuestado,
+                                  "AL" = "Albania", "AT" = "Austria", "BE" = "Belgium", "BG" = "Bulgaria",
+                                  "CH" = "Switzerland", "CY" = "Cyprus", "CZ" = "Czechia", "DE" = "Germany",
+                                  "DK" = "Denmark", "EE" = "Estonia", "ES" = "Spain", "FI" = "Finland",
+                                  "FR" = "France", "GB" = "United Kingdom", "GE" = "Georgia", "GR" = "Greece",
+                                  "HR" = "Croatia", "HU" = "Hungary", "IE" = "Ireland", "IS" = "Iceland",
+                                  "IL" = "Israel", "IT" = "Italy", "LT" = "Lithuania", "LU" = "Luxembourg",
+                                  "LV" = "Latvia", "ME" = "Montenegro", "MK" = "North Macedonia", "NL" = "Netherlands",
+                                  "NO" = "Norway", "PL" = "Poland", "PT" = "Portugal", "RO" = "Romania",
+                                  "RS" = "Serbia", "RU" = "Russian Federation", "SE" = "Sweden", "SI" = "Slovenia",
+                                  "SK" = "Slovakia", "TR" = "Turkey", "UA" = "Ukraine", "XK" = "Kosovo"))
+
+# Recodificar el género
+datos <- datos %>%
+  mutate(Genero = recode(Genero, "1" = "Hombre", "2" = "Mujer"))
+
+```
+
+
+
+
+Gráficos {data-icon="fa-signal"}
+==========================================================================
+Column {.sidebar data-height=150}
+----------------------------------------------------------------------
+
+
+```{r}
+# Crear inputs para selección
+selectInput("nivel_felicidad", "Nivel de felicidad", choices = c("TODOS", levels(factor(datos$Nivel_Felicidad, levels = 0:10))), selected = "TODOS")
+selectInput("pais", "País", choices = c("TODOS", levels(datos$Pais_Encuestado)), selected = "TODOS")
+selectInput("genero", "Género", choices = c("TODOS", "Hombre", "Mujer"), selected = "TODOS")
+
+```
+
+
+Column {data-width=550}
+----------------------------------------------------------------------
+
+
+
+```{r}
+renderPlot({
+  # Filtrar datos según input reactivo
+  datos_filtrados <- reactive({
+    datos %>%
+      filter((input$nivel_felicidad == "TODOS" | Nivel_Felicidad == input$nivel_felicidad),
+             (input$pais == "TODOS" | Pais_Encuestado == input$pais),
+             (input$genero == "TODOS" | Genero == input$genero))
+  })
+  
+  # Generar gráfico
+  ggplot(datos_filtrados(), aes(x = factor(Nivel_Felicidad, levels = 0:10))) +
+    geom_bar(fill = "skyblue", color = "black") +
+    scale_x_discrete(name = "Nivel de Felicidad", labels = as.character(0:10)) +
+    labs(title = "Distribución de la Felicidad", y = "Frecuencia") +
+    theme_minimal() +
+    theme(text = element_text(size = 12))
+})
+
+
+```
+
+
+
+```{r}
+renderPlot({
+  # Filtrar datos según input reactivo
+  datos_filtrados <- reactive({
+    datos %>%
+      filter((input$nivel_felicidad == "TODOS" | Nivel_Felicidad == input$nivel_felicidad),
+             (input$pais == "TODOS" | Pais_Encuestado == input$pais),
+             (input$genero == "TODOS" | Genero == input$genero))
+  })
+  
+  # Generar gráfico
+  ggplot(datos_filtrados(), aes(x = factor(Salud_Subjetiva, levels = 1:5))) +
+    geom_bar(fill = "lightgreen", color = "black") +
+    scale_x_discrete(name = "Salud Subjetiva", labels = c("Muy buena", "Buena", "Regular", "Mala", "Muy mala")) +
+    labs(title = "Distribución de la Salud Subjetiva", y = "Frecuencia") +
+    theme_minimal() +
+    theme(text = element_text(size = 12))
+})
+
+```
+
+
+
+Column {data-width=650}
+----------------------------------------------------------------------
+
+
+```{r}
+renderPlot({
+  # Filtrar datos según input reactivo
+  datos_filtrados <- reactive({
+    datos %>%
+      filter((input$pais == "TODOS" | Pais_Encuestado == input$pais))
+  })
+  
+  # Obtener datos del mapa
+  world <- ne_countries(scale = "medium", returnclass = "sf")
+  
+  # Calcular media de Satisfacción con la Vida por país
+  datos_pais <- datos_filtrados() %>%
+    group_by(Pais_Encuestado) %>%
+    summarise(Media_Satisfaccion = mean(as.numeric(as.character(Satisfaccion_Vida)), na.rm = TRUE))
+  
+  # Unir con datos del mapa
+  world <- world %>%
+    left_join(datos_pais, by = c("name_long" = "Pais_Encuestado"))
+  
+  # Generar mapa
+  ggplot(data = world) +
+    geom_sf(aes(fill = Media_Satisfaccion)) +
+    scale_fill_viridis_c(option = "plasma", na.value = "lightgrey") +
+    labs(title = "Mapa de Satisfacción con la Vida por País", fill = "Media Satisfacción") +
+    theme_minimal() +
+    theme(text = element_text(size = 12))
+})
+
+```
+
+
+----------------------------------------------------------------------
+
+
+```{r}
+renderPlot({
+  # Filtrar datos según input reactivo
+  datos_filtrados <- reactive({
+    datos %>%
+      filter((input$pais == "TODOS" | Pais_Encuestado == input$pais),
+             (input$genero == "TODOS" | Genero == input$genero))
+  })
+  
+  # Calcular porcentaje de hombres y mujeres
+  datos_genero <- datos_filtrados() %>%
+    group_by(Genero) %>%
+    summarise(Conteo = n()) %>%
+    mutate(Porcentaje = Conteo / sum(Conteo) * 100)
+  
+  # Generar gráfico de donuts
+  ggplot(datos_genero, aes(x = 2, y = Porcentaje, fill = Genero)) +
+    geom_bar(stat = "identity", width = 1) +
+    coord_polar(theta = "y", start = 0) +
+    scale_fill_manual(values = c("Hombre" = "skyblue", "Mujer" = "pink")) +
+    xlim(0.5, 2.5) +
+    geom_text(aes(label = paste0(round(Porcentaje), "%")), position = position_stack(vjust = 0.5), size = 6) +
+    labs(title = "Distribución de Género") +
+    theme_void() +
+    theme(legend.position = "right", text = element_text(size = 12))
+})
+
+
+```
+
+
+
+
+Tablas {data-icon="fa-table"}
+==========================================================================
+
+
+```{r}
+renderDataTable({
+  # Filtrar datos según input reactivo
+  datos_filtrados <- reactive({
+    datos %>%
+      filter((input$nivel_felicidad == "TODOS" | Nivel_Felicidad == input$nivel_felicidad),
+             (input$pais == "TODOS" | Pais_Encuestado == input$pais),
+             (input$genero == "TODOS" | Genero == input$genero))
+  })
+  
+  datatable(datos_filtrados(),
+            caption = 'Satisfacción con la Vida por País',
+            rownames = FALSE,
+            filter = 'top',
+            options = list(pageLength = 25))
+})
+
+
+
+
+```
+
+
+Acerca del estudio {data-icon="fa-globe"}
+==========================================================================
+Column {data-width=100}
+----------------------------------------------------------------------
+
+## Acerca del estudio
+
+El propósito de este dashboard es analizar y visualizar la satisfacción con la vida y otros indicadores sociodemográficos en diferentes países europeos, utilizando datos de la Encuesta Social Europea (ESS). Esta herramienta interactiva permite a los usuarios explorar cómo varían estos indicadores entre distintos países y grupos demográficos.
+
+**Uso del Dashboard**
+
+Este dashboard está diseñado para ser una herramienta interactiva que facilita la exploración de los datos de la ESS. Los usuarios pueden aplicar filtros para examinar cómo varían los niveles de felicidad y satisfacción con la vida según diferentes criterios demográficos, y visualizar estas diferencias de manera clara y concisa.
+
+
+
+
