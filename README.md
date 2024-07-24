@@ -28,7 +28,7 @@ La estructura del repositorio es la siguiente:
   - `BBDD Original.R/`: Scripts para isntalar o cargar librerias y leer la BBDD.
   - `Depuración_BBDD.R/`: Scripts utilizado para la depuración de la base de datos.
   - `BBDD Depurada.R/`: Scripts con la BBDD depurada.
-  - `Base de datos depurada/`: Contiene la base de datos depurada en formato CSV.
+  - `Base de datos Original/`: Contiene la base de datos depurada en formato CSV.
   - `Base de datos depurada/`: Contiene la base de datos depurada en formato CSV con el nombre de "ESS9e03_2-ESS10-subset_depurada.csv".
   
 - `SCRIPT R - Gráficos + Estadísticas/`
