@@ -202,17 +202,18 @@ Los datos provienen de la Encuesta Social Europea (ESS) y son actualizados bianu
 - Se espera que estos datos sean utilizados principalmente para análisis de políticas sociales y económicas a nivel europeo, en contextos de oficina y reuniones para la toma de decisiones estratégicas.
 
 
-## Preguntas que se pretenden responder: 
-¿Cuál es la distribución de los niveles de felicidad (happy) en los encuestados?
-¿Cuál es la distribución de la satisfacción con la vida (stflife) en los encuestados?
-¿Cuál es la distribución de la salud subjetiva (health) en los encuestados?
-¿Cómo se relacionan la satisfacción con la economía (stfeco) y la satisfacción con la vida (stflife)?
-¿Qué diferencias se observan en la satisfacción con la vida (stflife) según el estado civil (maritalb)?
-¿Qué diferencias se observan en la satisfacción con la vida (stflife) según la relación laboral (emplrel)?
-¿Cuáles son las diferencias en la satisfacción con la vida (stflife) entre los diferentes países europeos encuestados?
-Preguntas Adicionales
-¿Cómo se relaciona el tiempo de uso de Internet (netustm) con el nivel de felicidad (happy)?
-¿Existen diferencias significativas en la satisfacción con la vida (stflife) entre hombres y mujeres?
-¿Cómo se relaciona el nivel educativo (Education Group) con la satisfacción con la vida (stflife)?
-¿Cuál es el número de encuestados por grupo educativo y cómo se distribuye la satisfacción con la vida (stflife) en estos grupos?
+## Preguntas que se pretenden responder o se tiene la intención de dar respuesta a la mayoria de ellas: 
+1. ¿Cuál es la distribución de los niveles de felicidad (happy) en los encuestados?
+2. ¿Cuál es la distribución de la satisfacción con la vida (stflife) en los encuestados?
+3. ¿Cuál es la distribución de la salud subjetiva (health) en los encuestados?
+4. ¿Cómo se relacionan la satisfacción con la economía (stfeco) y la satisfacción con la vida (stflife)?
+5. ¿Qué diferencias se observan en la satisfacción con la vida (stflife) según el estado civil (maritalb)?
+6. ¿Qué diferencias se observan en la satisfacción con la vida (stflife) según la relación laboral (emplrel)?
+7. ¿Cuáles son las diferencias en la satisfacción con la vida (stflife) entre los diferentes países europeos encuestados?
+
+**Preguntas Adicionales**
+8. ¿Cómo se relaciona el tiempo de uso de Internet (netustm) con el nivel de felicidad (happy)?
+9. ¿Existen diferencias significativas en la satisfacción con la vida (stflife) entre hombres y mujeres?
+10. ¿Cómo se relaciona el nivel educativo (Education Group) con la satisfacción con la vida (stflife)?
+11. ¿Cuál es el número de encuestados por grupo educativo y cómo se distribuye la satisfacción con la vida (stflife) en estos grupos?
    
